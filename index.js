@@ -164,8 +164,33 @@ function processContains(item, list, callback) {
  * [2] Invoking `processDuplicateFree` passing `[1,1,2,2,3]` and `(arr) => arr.length`,
  * should return 3.
 */
-function processDuplicateFree(/* CODE HERE ONLY AFTER COMPLETING ALL OTHER TASKS */) {
-  /* CODE HERE ONLY AFTER COMPLETING ALL OTHER TASKS */
+function processDuplicateFree(list, callback) {
+  noDupes = [];
+  dupes = [];
+  for (let k = 0; k < list.length; k++) {
+    var isDupe = false;
+    for (let l = 0; l < list.length; l++) {
+      let inDupes = false;
+      if (list[k] === list[l] && k != l) {
+        isDupe = true;
+        if (inDupes.length != 0) {
+          for (let m = 0; m < dupes.length; m++) {
+            if (list[k] === dupes[m]) {
+              inDupes = true;
+            }
+          }
+        }
+        if (dupes.length == 0 || !inDupes) {
+          noDupes.push(list[k]);
+        }
+        dupes.push(list[k]);
+      }
+      if (!isDupe && l === (list.length - 1)) {
+        noDupes.push(list[k]);
+      }
+    }
+  }
+  return callback(noDupes);
 }
 
 /////////////// HIGHER-ORDER ARRAY METHODS ///////////////
@@ -285,8 +310,14 @@ function counterMaker() {
  * counter() // should return 0
  * etc
 */
-function counterMakerWithLimit(/* CODE HERE */) {
-  /* CODE HERE */
+function counterMakerWithLimit(limit) {
+  var count = -1;
+  return function counter() {
+    if (count >= limit) {
+      count = -1;
+    }
+    return ++count;
+  }
 }
 
 /////////////// END OF CHALLENGE ///////////////
